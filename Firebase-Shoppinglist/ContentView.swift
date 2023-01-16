@@ -7,10 +7,30 @@
 
 import SwiftUI
 
+
+
 struct ContentView: View {
+    @State var items = [Item]()
+    
+    init() {
+        items.append(Item(name: "morot"))
+        items.append(Item(name: "mjölk"))
+        items.append(Item(name: "sirap"))
+        
+    }
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack{
+            List {
+                ForEach(items){ item in
+                    Text(item.name)
+                }
+            }
+            
+        }
+
+        
+        .padding()
     }
 }
 
@@ -19,3 +39,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+ 
