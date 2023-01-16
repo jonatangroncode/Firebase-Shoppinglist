@@ -8,8 +8,8 @@
 import Foundation
 
 
-struct Item : Identifiable {
-    var id = UUID()
+struct Item : Codable, Identifiable {
+    var id : String
     
     var name : String 
     var category : String = ""
