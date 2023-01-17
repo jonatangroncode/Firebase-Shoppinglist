@@ -18,7 +18,21 @@ struct ContentView: View {
         VStack{
             List {
                 ForEach(items){ item in
+                    HStack{
                     Text(item.name)
+                        Spacer()
+                        Button(action: {
+                            db.collection("items").document(item.id).updateData(["done" : !item.done])
+                        }) {
+                        Image(systemName: item.done ? "checkmark.square" : "square")
+                        }
+                    }
+                }.onDelete() {indexSet in
+                    for index in indexSet {
+                        let item = items[index]
+                        db.collection("items").document(item.id).delete()
+                    }
+                    
                 }
             }
             
@@ -49,7 +63,7 @@ struct ContentView: View {
             if let err = err {
                 print("Error getting document \(err)")
             } else {
-                
+                items.removeAll()
                 for document in snapshot.documents {
                     let item = Item(id: document.documentID,
                                     name: document["name"] as! String,
